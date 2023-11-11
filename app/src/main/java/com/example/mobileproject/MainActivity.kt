@@ -9,7 +9,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
 
     val fragmentManager: FragmentManager = supportFragmentManager
+    private var isLoggedIn: Boolean = false
     val fragmentBLogin: FragmentBLogin = FragmentBLogin()
+    val fragmentALogin: FragmentALogin = FragmentALogin()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -33,8 +35,13 @@ class MainActivity : AppCompatActivity() {
                     // transaction.replace(R.id.frameLayout, 다른 Fragment).commitAllowingStateLoss()
                 }
                 R.id.mypageItem -> {
-                    // '나의정보' 아이템 클릭 시 FragmentBLogin을 표시
-                    transaction.replace(R.id.frameLayout, fragmentBLogin).commitAllowingStateLoss()
+                    // '나의정보' 아이템 클릭 시 FragmentBLogin 또는 FragmentALogin을 표시
+                    if (isLoggedIn) {
+                        transaction.replace(R.id.frameLayout, fragmentALogin)
+                    } else {
+                        transaction.replace(R.id.frameLayout, fragmentBLogin)
+                    }
+                    transaction.commitAllowingStateLoss()
                 }
             }
 
@@ -42,4 +49,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun setLoggedInStatus(isLoggedIn: Boolean) {
+        this.isLoggedIn = isLoggedIn
+    }
 }

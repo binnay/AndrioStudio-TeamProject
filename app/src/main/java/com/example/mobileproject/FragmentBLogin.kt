@@ -69,6 +69,7 @@ class FragmentBLogin : Fragment() {
                         transaction.replace(R.id.frameLayout, fragmentALogin)
                         transaction.addToBackStack(null)
                         transaction.commitAllowingStateLoss()
+                        (activity as? MainActivity)?.setLoggedInStatus(true)
 
                         binding.userId.text = null
                         binding.password.text = null
@@ -96,6 +97,7 @@ class FragmentBLogin : Fragment() {
                     val transaction = requireActivity().supportFragmentManager.beginTransaction()
                     transaction.replace(R.id.frameLayout, fragmentALogin)
                     transaction.commitAllowingStateLoss()
+                    (activity as? MainActivity)?.setLoggedInStatus(true)
                 } else {
                     Log.d("SignUp", it.exception.toString())
                     Toast.makeText(requireContext(), "SignUp failed: ${it.exception?.message}", Toast.LENGTH_SHORT).show()

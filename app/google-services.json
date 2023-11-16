@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "529114898902",
-    "project_id": "mobile-project-88781",
-    "storage_bucket": "mobile-project-88781.appspot.com"
+    "project_number": "519099521204",
+    "project_id": "android-teamproject",
+    "storage_bucket": "android-teamproject.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:529114898902:android:788670c3115ee33cab0477",
+        "mobilesdk_app_id": "1:519099521204:android:085a488e70d02423fd5fe1",
         "android_client_info": {
           "package_name": "com.example.mobileproject"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCQcVTuaFl4r3Qv-Iawji7q3lrgpfUV5cE"
+          "current_key": "AIzaSyCOOtQ5axnHEcfpVSGOEZLLhZd2PmGT3Fg"
         }
       ],
       "services": {

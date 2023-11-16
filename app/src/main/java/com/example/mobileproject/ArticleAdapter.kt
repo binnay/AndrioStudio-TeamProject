@@ -17,18 +17,15 @@ class ArticleAdapter : ListAdapter<ArticleModel, ArticleAdapter.ViewHolder>(diff
 
         @SuppressLint("SimpleDateFormat")
         fun bind(articleModel: ArticleModel) {
-            val format = SimpleDateFormat("MM월 dd일")
-            val date = Date(articleModel.createdAt)
 
             binding.titleTextView.text = articleModel.title
-            binding.dateTextView.text = format.format(date).toString()  // Long 형을 date 형식으로 변환
             binding.priceTextView.text = articleModel.price
 
-            if (articleModel.imageUrl.isNotEmpty()) {
-                Glide.with(binding.thumbnailImageView)
-                    .load(articleModel.imageUrl)
-                    .into(binding.thumbnailImageView)
-            }
+//            if (articleModel.imageUrl.isNotEmpty()) {
+//                Glide.with(binding.thumbnailImageView)
+//                    .load(articleModel.imageUrl)
+//                    .into(binding.thumbnailImageView)
+//            }
         }
     }
 
@@ -43,8 +40,10 @@ class ArticleAdapter : ListAdapter<ArticleModel, ArticleAdapter.ViewHolder>(diff
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<ArticleModel>() {
             override fun areItemsTheSame(oldItem: ArticleModel, newItem: ArticleModel): Boolean {
-                return oldItem.createdAt == newItem.createdAt
+//                return oldItem.createdAt == newItem.createdAt
+                return oldItem.title == newItem.title
             }
+
 
             override fun areContentsTheSame(oldItem: ArticleModel, newItem: ArticleModel): Boolean {
                 return oldItem == newItem

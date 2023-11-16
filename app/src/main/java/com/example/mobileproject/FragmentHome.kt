@@ -9,6 +9,8 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mobileproject.databinding.FragmentHomeBinding
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 
 class FragmentHome : Fragment(R.layout.fragment_home) {
 
@@ -17,6 +19,7 @@ class FragmentHome : Fragment(R.layout.fragment_home) {
         const val TAG = "HomeFragment"
     }
 
+    private lateinit var auth: FirebaseAuth
     // 전역변수는 nullable 하기 때문에 onViewCreate() 안에서는 절대적으로 null이 들어오지
     // 못하게 하기 위해 임시로 지역변수로 설정
     private var binding: FragmentHomeBinding? = null
@@ -30,25 +33,25 @@ class FragmentHome : Fragment(R.layout.fragment_home) {
         val fragmentHomeBinding = FragmentHomeBinding.bind(view)
         binding = fragmentHomeBinding
 
-
+        auth = FirebaseAuth.getInstance()
         adapter = ArticleAdapter()
 
         fragmentHomeBinding.articleRecyclerView.layoutManager = LinearLayoutManager(context)
         fragmentHomeBinding.articleRecyclerView.adapter = adapter
 
         fragmentHomeBinding.addFloatingButton.setOnClickListener {
-//            context?.let {
-//                if (auth.currentUser != null) {
-//                    val intent = Intent(it, AddArticleActivity::class.java)
-//                    startActivity(intent)
-//                } else {
-//                    Snackbar.make(view, "로그인 후 사용하실 수 있습니다.", Snackbar.LENGTH_SHORT).show()
-//                }
-//            }
             context?.let {
-                val intent = Intent(it, AddArticleActivity::class.java)
-                startActivity(intent)
+                if (auth.currentUser != null) {
+                    val intent = Intent(it, AddArticleActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Snackbar.make(view, "로그인 후 사용하실 수 있습니다.", Snackbar.LENGTH_SHORT).show()
+                }
             }
+//            context?.let {
+//                val intent = Intent(it, AddArticleActivity::class.java)
+//                startActivity(intent)
+//            }
         }
     }
 

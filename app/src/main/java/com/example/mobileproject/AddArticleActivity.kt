@@ -1,16 +1,11 @@
 package com.example.mobileproject
 
-import android.content.ClipData.Item
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mobileproject.databinding.ActivityAddArticleBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 class AddArticleActivity : AppCompatActivity() {
 //    private val binding by lazy { ActivityAddArticleBinding.inflate(layoutInflater) }
@@ -32,10 +27,12 @@ class AddArticleActivity : AppCompatActivity() {
     private fun addArticleToFirestore() {
         val titleEditText = findViewById<EditText>(R.id.titleEditText)
         val priceEditText = findViewById<EditText>(R.id.priceEditText)
+        val contentEditText = findViewById<EditText>(R.id.contentEditText)
 
         val title = titleEditText.text.toString()
         val price = priceEditText.text.toString()
-        val newPostData = ArticleModel(title, price,"")
+        val content = contentEditText.text.toString()
+        val newPostData = ArticleModel(title, price, content, false)
         val userId = auth.currentUser?.email
         val itemsCollection= db.collection("items")
         if(userId!=null) {

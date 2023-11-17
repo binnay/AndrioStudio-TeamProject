@@ -12,12 +12,13 @@ class MainActivity : AppCompatActivity() {
     private var isLoggedIn: Boolean = false
     val fragmentBLogin: FragmentBLogin = FragmentBLogin()
     val fragmentALogin: FragmentALogin = FragmentALogin()
+    val fragmentHome: FragmentHome = FragmentHome()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
-        transaction.replace(R.id.frameLayout, fragmentBLogin).commit()
+        transaction.replace(R.id.frameLayout, fragmentHome).commit()
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
 
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.homeItem -> {
                     // 홈 아이템 클릭 시 다른 Fragment로 교체하도록 처리
-                    // transaction.replace(R.id.frameLayout, 다른 Fragment).commitAllowingStateLoss()
+                     transaction.replace(R.id.frameLayout, fragmentHome).commitAllowingStateLoss()
                 }
                 R.id.chatItem -> {
                     // 대화하기 아이템 클릭 시 다른 Fragment로 교체하도록 처리

@@ -86,14 +86,14 @@ class FragmentBLogin : Fragment() {
                         Log.w("LoginActivity", "signInWithEmail", it.exception)
                         val activity = activity
                         if (activity != null) {
-                            Toast.makeText(requireContext(), "Authentication failed.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "로그인 실패: ${it.exception?.message}", Toast.LENGTH_SHORT).show()
                         } else {
                             Log.e("LoginActivity", "Activity is null. Unable to show Toast.")
                         }
                     }
                 }
         } else {
-            Toast.makeText(requireContext(), "Email or password is empty.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "이메일과 비밀번호를 모두 입력하세요", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -112,14 +112,14 @@ class FragmentBLogin : Fragment() {
                         Log.d("SignUp", it.exception.toString())
                         Toast.makeText(
                             requireContext(),
-                            "SignUp failed: ${it.exception?.message}",
+                            "회원가입 실패: ${it.exception?.message}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
         } catch (e: Exception) {
             Log.e("SignupError", "회원가입 중 오류 발생", e)
-            Toast.makeText(requireContext(), "오류가 발생했습니다: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "이메일과 비밀번호 모두 입력하세요: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
 }

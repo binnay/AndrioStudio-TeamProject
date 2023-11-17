@@ -93,7 +93,7 @@ class FragmentBLogin : Fragment() {
                     }
                 }
         } else {
-            Toast.makeText(requireContext(), "이메일과 비밀번호를 모두 입력하세요", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "이메일과 비밀번호을 입력하세요", Toast.LENGTH_SHORT).show()
         }
     }
 

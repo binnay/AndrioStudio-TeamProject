@@ -3,7 +3,8 @@ package com.example.mobileproject
 data class ArticleModel(
     val title: String,
     val price: String,
-    val imageUrl: String
+    val content: String,
+    val isSold: Boolean
 ) {
-    constructor(): this("", "", "")
+    constructor(): this("", "", "", false)
 }

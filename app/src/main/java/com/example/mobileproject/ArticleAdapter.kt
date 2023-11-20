@@ -14,6 +14,19 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
+    // 아이템 클릭 리스너 인터페이스 정의
+    interface OnItemClickListener {
+        fun onItemClick(position: Int, item: ArticleModel)
+    }
+
+    // 아이템 클릭 리스너 멤버 변수
+    private var listener: OnItemClickListener? = null
+
+    // 아이템 클릭 리스너 설정 메서드
+    fun setOnItemClickListener(listener: OnItemClickListener?) {
+        this.listener = listener
+    }
+
     inner class ViewHolder(private val binding: ItemArticleBinding): RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SimpleDateFormat")
@@ -35,7 +48,19 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ItemArticleBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        val binding = ItemArticleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val viewHolder = ViewHolder(binding)
+
+        // 아이템 뷰 클릭 시 호출되는 리스너 설정
+        binding.root.setOnClickListener {
+            val position = viewHolder.adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                val item = itemList[position]
+                listener?.onItemClick(position, item)
+            }
+        }
+
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

@@ -37,6 +37,14 @@ class AddArticleActivity : AppCompatActivity() {
         val itemsCollection= db.collection("items")
         if(userId!=null) {
             val userDoc = itemsCollection.document(userId.toString())
+            userDoc.get().addOnSuccessListener {
+                if(!it.exists()) {
+                    val dataToAdd = hashMapOf(
+                        "email" to userId.toString()
+                    )
+                    userDoc.set(dataToAdd)
+                }
+            }
             val ItemList = userDoc.collection("Item List").document(newPostData.title)
             ItemList.set(newPostData)
         }

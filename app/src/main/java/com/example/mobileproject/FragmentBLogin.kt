@@ -97,8 +97,33 @@ class FragmentBLogin : Fragment() {
         }
     }
 
+    private fun isSignupInputValid(userEmail: String, password: String, name: String, birthDate: String): Boolean {
+        return userEmail.isNotEmpty() && password.isNotEmpty() && name.isNotEmpty() && birthDate.isNotEmpty()
+    }
+
     private fun doSignup(userEmail: String, password: String) {
-        try {
+        val name = binding.name.text.toString()
+        val birthDate = binding.editTextDate.text.toString()
+
+        if (isSignupInputValid(userEmail, password, name, birthDate)) {
+            firebaseAuth.createUserWithEmailAndPassword(userEmail, password)
+                .addOnCompleteListener(requireActivity()) {
+                    if (it.isSuccessful) {
+
+                        // 로그인 상태 설정 및 Fragment 전환
+                        val fragmentALogin = FragmentALogin()
+                        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                        transaction.replace(R.id.frameLayout, fragmentALogin)
+                        transaction.commitAllowingStateLoss()
+                        (activity as? MainActivity)?.setLoggedInStatus(true)
+                    } else {
+                        Toast.makeText(requireContext(), "회원가입 실패: ${it.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+        } else {
+            Toast.makeText(requireContext(), "모든 필드를 올바르게 입력해주세요.", Toast.LENGTH_SHORT).show()
+        }
+        /*try {
             firebaseAuth.createUserWithEmailAndPassword(userEmail, password)
                 .addOnCompleteListener(requireActivity()) {
                     if (it.isSuccessful) {
@@ -120,6 +145,6 @@ class FragmentBLogin : Fragment() {
         } catch (e: Exception) {
             Log.e("SignupError", "회원가입 중 오류 발생", e)
             Toast.makeText(requireContext(), "이메일과 비밀번호 모두 입력하세요: ${e.message}", Toast.LENGTH_SHORT).show()
-        }
+        }*/
     }
 }

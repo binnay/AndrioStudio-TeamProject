@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import androidx.recyclerview.widget.RecyclerView
 
 class Firestore {
 
@@ -90,6 +91,25 @@ class FragmentHome : Fragment(R.layout.fragment_home) {
 //                startActivity(intent)
 //            }
         }
+
+        // RecyclerView의 아이템 클릭 리스너 설정
+        adapter.setOnItemClickListener(object : ArticleAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int, item: ArticleModel) {
+                // 클릭한 아이템에서 필요한 정보 추출
+                val title = item.title
+                val price = item.price
+                val content = item.content
+
+                // 상세 보기 페이지로 이동하는 인텐트 생성 및 정보 추가
+                val intent = Intent(requireContext(), DetailArticleActivity::class.java)
+                intent.putExtra("title", title)
+                intent.putExtra("price", price)
+                intent.putExtra("content", content)
+
+                // 상세 보기 페이지로 이동
+                startActivity(intent)
+            }
+        })
     }
 
 

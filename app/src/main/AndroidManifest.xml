@@ -25,6 +25,10 @@
         <activity android:name=".AddArticleActivity">
         </activity>
 
+        <activity
+            android:name=".DetailArticleActivity">
+        </activity>
+
     </application>
 
 </manifest>

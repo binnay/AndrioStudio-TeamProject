@@ -34,6 +34,7 @@ class Firestore {
                     for(itemDocument in it) {
 //                        System.out.println("checked "+itemDocument.get("title"))
                         val article = ArticleModel(
+                            document.get("id").toString(),
                             itemDocument.get("title").toString(),
                             itemDocument.get("price").toString(),
                             "",

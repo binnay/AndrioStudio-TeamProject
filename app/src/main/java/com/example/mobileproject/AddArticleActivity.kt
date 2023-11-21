@@ -29,11 +29,12 @@ class AddArticleActivity : AppCompatActivity() {
         val priceEditText = findViewById<EditText>(R.id.priceEditText)
         val contentEditText = findViewById<EditText>(R.id.contentEditText)
 
+        val userId = auth.currentUser?.email
         val title = titleEditText.text.toString()
         val price = priceEditText.text.toString()
         val content = contentEditText.text.toString()
-        val newPostData = ArticleModel(title, price, content, false)
-        val userId = auth.currentUser?.email
+        val newPostData = ArticleModel(userId.toString(), title, price, content, false)
+
         val itemsCollection= db.collection("items")
         if(userId!=null) {
             val userDoc = itemsCollection.document(userId.toString())

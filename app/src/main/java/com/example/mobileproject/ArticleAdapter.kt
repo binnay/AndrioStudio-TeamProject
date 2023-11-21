@@ -34,6 +34,7 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
 
             binding.titleTextView.text = articleModel.title
             binding.priceTextView.text = articleModel.price
+            binding.userIdTextView.text = articleModel.userId
 
 //            if (articleModel.imageUrl.isNotEmpty()) {
 //                Glide.with(binding.thumbnailImageView)

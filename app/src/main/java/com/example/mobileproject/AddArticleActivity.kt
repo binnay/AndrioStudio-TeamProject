@@ -1,5 +1,6 @@
 package com.example.mobileproject
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -74,6 +75,10 @@ class AddArticleActivity : AppCompatActivity() {
             )
             ItemList.set(dataToAdd)
              */
+            // 글쓰기가 완료되면 FragmentHome을 표시하도록 설정
+            val mainActivityIntent = Intent(this, MainActivity::class.java)
+            mainActivityIntent.putExtra("fragmentToLoad", "homeFragment") // MainActivity에서 어떤 Fragment를 표시할지를 지정
+            startActivity(mainActivityIntent)
         }
     }
 }

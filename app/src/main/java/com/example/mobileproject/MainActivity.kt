@@ -19,7 +19,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
-        transaction.replace(R.id.frameLayout, fragmentBLogin).commit()
+        //transaction.replace(R.id.frameLayout, fragmentBLogin).commit()
+
+        val fragmentToLoad = intent.getStringExtra("fragmentToLoad")
+        if (fragmentToLoad == "homeFragment") {
+            transaction.replace(R.id.frameLayout, fragmentHome).commit()
+        } else {
+            transaction.replace(R.id.frameLayout, fragmentBLogin).commit()
+        }
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
 

@@ -14,6 +14,7 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
+
     // 아이템 클릭 리스너 인터페이스 정의
     interface OnItemClickListener {
         fun onItemClick(position: Int, item: ArticleModel)
@@ -33,7 +34,7 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
         fun bind(articleModel: ArticleModel) {
 
             binding.titleTextView.text = articleModel.title
-            binding.priceTextView.text = articleModel.price
+            binding.priceTextView.text = articleModel.price.toString()
             binding.userIdTextView.text = articleModel.userId
             val isSold = articleModel.isSold
             binding.isSoldTextView.text = if (isSold) "판매완료" else "판매중"

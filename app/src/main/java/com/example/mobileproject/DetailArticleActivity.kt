@@ -24,7 +24,7 @@ class DetailArticleActivity : AppCompatActivity() {
         val intent = intent
         val title = intent.getStringExtra("title")
         val seller = intent.getStringExtra("seller")
-        val price = intent.getStringExtra("price")
+        val price = intent.getIntExtra("price", 0)
 
         val itemsCollection= db.collection("items")
         val userDoc = itemsCollection.document(seller.toString())
@@ -34,7 +34,7 @@ class DetailArticleActivity : AppCompatActivity() {
             if (documentSnapshot.exists()) {
                 val content = documentSnapshot.getString("content") ?: "" // null 처리 추가
                 findViewById<TextView>(R.id.detailDescription).text = content
-                val isSold = documentSnapshot.getBoolean("isSold") ?: false
+                val isSold = documentSnapshot.getBoolean("sold") ?: false
                 findViewById<TextView>(R.id.detailIsSold).text = if (isSold) "판매완료" else "판매중"
             } else {
                 // 문서가 존재하지 않을 때의 처리 (옵션)
@@ -53,6 +53,6 @@ class DetailArticleActivity : AppCompatActivity() {
 
         titleTextView.text = title
         sellerNameTextView.text = seller
-        priceTextView.text = price
+        priceTextView.text = price.toString()
     }
 }

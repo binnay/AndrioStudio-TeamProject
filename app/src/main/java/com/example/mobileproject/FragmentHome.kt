@@ -34,7 +34,7 @@ class Firestore {
                     for(itemDocument in it) {
 //                        System.out.println("checked "+itemDocument.get("title"))
                         val article = ArticleModel(
-                            document.get("id").toString(),
+                            document.get("email").toString(),
                             itemDocument.get("title").toString(),
                             itemDocument.get("price").toString(),
                             "",
@@ -97,12 +97,14 @@ class FragmentHome : Fragment(R.layout.fragment_home) {
         adapter.setOnItemClickListener(object : ArticleAdapter.OnItemClickListener {
             override fun onItemClick(position: Int, item: ArticleModel) {
                 // 클릭한 아이템에서 필요한 정보 추출
+                val userId = item.userId
                 val title = item.title
                 val price = item.price
                 val content = item.content
 
                 // 상세 보기 페이지로 이동하는 인텐트 생성 및 정보 추가
                 val intent = Intent(requireContext(), DetailArticleActivity::class.java)
+                intent.putExtra("seller", userId)
                 intent.putExtra("title", title)
                 intent.putExtra("price", price)
                 intent.putExtra("content", content)

@@ -35,7 +35,8 @@ class ArticleAdapter : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
             binding.titleTextView.text = articleModel.title
             binding.priceTextView.text = articleModel.price
             binding.userIdTextView.text = articleModel.userId
-
+            val isSold = articleModel.isSold
+            binding.isSoldTextView.text = if (isSold) "판매완료" else "판매중"
 //            if (articleModel.imageUrl.isNotEmpty()) {
 //                Glide.with(binding.thumbnailImageView)
 //                    .load(articleModel.imageUrl)

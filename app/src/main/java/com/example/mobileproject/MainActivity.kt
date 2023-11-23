@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
         val fragmentToLoad = intent.getStringExtra("fragmentToLoad")
         if (fragmentToLoad == "homeFragment") {
+            setLoggedInStatus(true) // 글수정/삭제 후 로그인 안정성 유지 위해 추가
             transaction.replace(R.id.frameLayout, fragmentHome).commit()
         } else {
             transaction.replace(R.id.frameLayout, fragmentBLogin).commit()

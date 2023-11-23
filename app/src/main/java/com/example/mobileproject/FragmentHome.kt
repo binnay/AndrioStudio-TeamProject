@@ -36,9 +36,9 @@ class Firestore {
                         val article = ArticleModel(
                             document.get("email").toString(),
                             itemDocument.get("title").toString(),
-                            itemDocument.get("price").toString(),
+                            itemDocument.get("price").toString().toInt(),
                             "",
-                            false
+                            itemDocument.get("sold").toString().toBoolean()
                         )
                         articleList.add(article)
                         System.out.println("checked article title : "+article.title + ", price : "+article.price)
@@ -102,15 +102,23 @@ class FragmentHome : Fragment(R.layout.fragment_home) {
                 val price = item.price
                 val content = item.content
 
-                // 상세 보기 페이지로 이동하는 인텐트 생성 및 정보 추가
-                val intent = Intent(requireContext(), DetailArticleActivity::class.java)
-                intent.putExtra("seller", userId)
-                intent.putExtra("title", title)
-                intent.putExtra("price", price)
-                intent.putExtra("content", content)
+                if(auth.currentUser?.email==userId) {
+                    val intent = Intent(requireContext(), EditArticleActivity::class.java)
+                    intent.putExtra("title", title)
 
-                // 상세 보기 페이지로 이동
-                startActivity(intent)
+                    // 수정하기 페이지로 이동
+                    startActivity(intent)
+                } else {
+                    val intent = Intent(requireContext(), DetailArticleActivity::class.java)
+                    intent.putExtra("seller", userId)
+                    intent.putExtra("title", title)
+                    intent.putExtra("price", price)
+                    intent.putExtra("content", content)
+
+                    // 상세 보기 페이지로 이동
+                    startActivity(intent)
+                }
+
             }
         })
     }

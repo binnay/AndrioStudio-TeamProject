@@ -58,14 +58,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbarUnderLineView" />
 
-    <EditText
-        android:id="@+id/titleEditText"
+    <TextView
+        android:id="@+id/titleTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:hint="@string/title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageAddButton" />
@@ -81,20 +80,20 @@
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/titleEditText" />
+        app:layout_constraintTop_toBottomOf="@id/titleTextView" />
 
     <EditText
         android:id="@+id/contentEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="20dp"
         android:hint="@string/content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageAddButton" />
+        app:layout_constraintTop_toBottomOf="@+id/priceEditText" />
 
     <Button
         android:id="@+id/submitButton"
@@ -120,5 +119,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
+
+    <EditText
+        android:id="@+id/isSoldEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="@string/isSold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contentEditText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

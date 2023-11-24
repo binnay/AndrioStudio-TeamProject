@@ -11,7 +11,6 @@ class MainActivity : AppCompatActivity() {
 
     val fragmentManager: FragmentManager = supportFragmentManager
     private var isLoggedIn: Boolean = false
-    val fragmentBLogin: FragmentBLogin = FragmentBLogin()
     val fragmentALogin: FragmentALogin = FragmentALogin()
     val fragmentHome: FragmentHome = FragmentHome()
 
@@ -22,7 +21,6 @@ class MainActivity : AppCompatActivity() {
         setLoggedInStatus(true)
 
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
-        //transaction.replace(R.id.frameLayout, fragmentBLogin).commit()
 
         val fragmentToLoad = intent.getStringExtra("fragmentToLoad")
         /*if (fragmentToLoad == "homeFragment") {
@@ -37,37 +35,6 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             val transaction: FragmentTransaction = fragmentManager.beginTransaction()
 
-            /*when (menuItem.itemId) {
-                R.id.homeItem -> {
-                    if(isLoggedIn) { // 로그인후에만 볼 수 있도록
-                        // 홈 아이템 클릭 시 다른 Fragment로 교체하도록 처리
-                        transaction.replace(R.id.frameLayout, fragmentHome)
-                            .commitAllowingStateLoss()
-                    } else {
-                        transaction.replace(R.id.frameLayout, fragmentBLogin)
-                        Toast.makeText(this, "로그인 후 사용하실 수 있습니다.", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                R.id.chatItem -> {
-                    if(isLoggedIn) {
-                        // 대화하기 아이템 클릭 시 다른 Fragment로 교체하도록 처리
-                        // transaction.replace(R.id.frameLayout, 다른 Fragment).commitAllowingStateLoss()
-                    } else {
-                        transaction.replace(R.id.frameLayout, fragmentBLogin)
-                        Toast.makeText(this, "로그인 후 사용하실 수 있습니다.", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                R.id.mypageItem -> {
-                    // '나의정보' 아이템 클릭 시 FragmentBLogin 또는 FragmentALogin을 표시
-                    /*if (isLoggedIn) {
-                        transaction.replace(R.id.frameLayout, fragmentALogin)
-                    } else {
-                        transaction.replace(R.id.frameLayout, fragmentBLogin)
-                    }*/
-                    transaction.replace(R.id.frameLayout, fragmentALogin)
-                    transaction.commitAllowingStateLoss()
-                }
-            }*/
 
             when (menuItem.itemId) {
                 R.id.homeItem -> {

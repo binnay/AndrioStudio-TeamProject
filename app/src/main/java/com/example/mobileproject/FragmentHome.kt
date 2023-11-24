@@ -24,10 +24,7 @@ class Firestore {
 
     fun getArticles(callback: (List<ArticleModel>) -> Unit) {
         val articleList = mutableListOf<ArticleModel>()
-//        val id1 = itemsCollection.document("1@2.3").collection("Item List").document("test 1")
-//            .get().addOnSuccessListener {
-//                System.out.println("checked 3 : "+ (it["title"])+" "+it["price"])
-//            }
+
         itemsCollection
             .get().addOnSuccessListener {
             for(document in it){

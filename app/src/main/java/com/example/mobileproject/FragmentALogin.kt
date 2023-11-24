@@ -1,5 +1,6 @@
 package com.example.mobileproject
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -35,10 +36,17 @@ class FragmentALogin : Fragment() {
             // MainActivity에 로그인 상태를 알립니다. (isLoggedIn을 false로 설정)
             (activity as? MainActivity)?.setLoggedInStatus(false)
 
-            val fragmentBLogin = FragmentBLogin()
+            /*val fragmentBLogin = FragmentBLogin()
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.replace(R.id.frameLayout, fragmentBLogin)
-            transaction.commitAllowingStateLoss()
+            transaction.commitAllowingStateLoss()*/
+
+            // BeforeLoginActivity로 이동
+            val intent = Intent(activity, BeforeLoginActivity::class.java)
+            startActivity(intent)
+
+            // 현재 액티비티를 종료하여 뒤로 돌아갈 수 없게 합니다.
+            activity?.finish()
         }
 
     }

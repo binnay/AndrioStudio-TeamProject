@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.mobileproject.databinding.FragmentBeforeLoginBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 class FragmentBLogin : Fragment() {
@@ -73,8 +74,9 @@ class FragmentBLogin : Fragment() {
                     if (it.isSuccessful) {
                         // 로그인이 성공하면 원하는 Fragment로 전환
                         val fragmentALogin = FragmentALogin()
+                        val fragmentHome = FragmentHome()
                         val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                        transaction.replace(R.id.frameLayout, fragmentALogin)
+                        transaction.replace(R.id.frameLayout, fragmentHome)
                         transaction.addToBackStack(null)
                         transaction.commitAllowingStateLoss()
                         (activity as? MainActivity)?.setLoggedInStatus(true)
@@ -112,8 +114,9 @@ class FragmentBLogin : Fragment() {
 
                         // 로그인 상태 설정 및 Fragment 전환
                         val fragmentALogin = FragmentALogin()
+                        val fragmentHome = FragmentHome()
                         val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                        transaction.replace(R.id.frameLayout, fragmentALogin)
+                        transaction.replace(R.id.frameLayout, fragmentHome)
                         transaction.commitAllowingStateLoss()
                         (activity as? MainActivity)?.setLoggedInStatus(true)
                     } else {

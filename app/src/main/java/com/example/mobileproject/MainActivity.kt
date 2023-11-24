@@ -14,20 +14,22 @@ class MainActivity : AppCompatActivity() {
     val fragmentBLogin: FragmentBLogin = FragmentBLogin()
     val fragmentALogin: FragmentALogin = FragmentALogin()
     val fragmentHome: FragmentHome = FragmentHome()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        setLoggedInStatus(true)
 
         val transaction: FragmentTransaction = fragmentManager.beginTransaction()
         //transaction.replace(R.id.frameLayout, fragmentBLogin).commit()
 
         val fragmentToLoad = intent.getStringExtra("fragmentToLoad")
-        if (fragmentToLoad == "homeFragment") {
+        /*if (fragmentToLoad == "homeFragment") {
             setLoggedInStatus(true) // 글수정/삭제 후 로그인 안정성 유지 위해 추가
             transaction.replace(R.id.frameLayout, fragmentHome).commit()
-        } else {
-            transaction.replace(R.id.frameLayout, fragmentBLogin).commit()
-        }
+        }*/
+        transaction.replace(R.id.frameLayout, fragmentHome).commit()
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
 
@@ -35,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             val transaction: FragmentTransaction = fragmentManager.beginTransaction()
 
-            when (menuItem.itemId) {
+            /*when (menuItem.itemId) {
                 R.id.homeItem -> {
                     if(isLoggedIn) { // 로그인후에만 볼 수 있도록
                         // 홈 아이템 클릭 시 다른 Fragment로 교체하도록 처리
@@ -57,11 +59,33 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.mypageItem -> {
                     // '나의정보' 아이템 클릭 시 FragmentBLogin 또는 FragmentALogin을 표시
-                    if (isLoggedIn) {
+                    /*if (isLoggedIn) {
                         transaction.replace(R.id.frameLayout, fragmentALogin)
                     } else {
                         transaction.replace(R.id.frameLayout, fragmentBLogin)
+                    }*/
+                    transaction.replace(R.id.frameLayout, fragmentALogin)
+                    transaction.commitAllowingStateLoss()
+                }
+            }*/
+
+            when (menuItem.itemId) {
+                R.id.homeItem -> {
+                    if(isLoggedIn) { // 로그인후에만 볼 수 있도록
+                        // 홈 아이템 클릭 시 다른 Fragment로 교체하도록 처리
+                        transaction.replace(R.id.frameLayout, fragmentHome)
+                            .commitAllowingStateLoss()
                     }
+                }
+                R.id.chatItem -> {
+                    if(isLoggedIn) {
+                        // 대화하기 아이템 클릭 시 다른 Fragment로 교체하도록 처리
+                        // transaction.replace(R.id.frameLayout, 다른 Fragment).commitAllowingStateLoss()
+                    }
+                }
+                R.id.mypageItem -> {
+
+                    transaction.replace(R.id.frameLayout, fragmentALogin)
                     transaction.commitAllowingStateLoss()
                 }
             }

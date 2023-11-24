@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -56,8 +57,13 @@ class FragmentHome : Fragment(R.layout.fragment_home) {
     // 전역변수는 nullable 하기 때문에 onViewCreate() 안에서는 절대적으로 null이 들어오지
     // 못하게 하기 위해 임시로 지역변수로 설정
     private var binding: FragmentHomeBinding? = null
-
+    private lateinit var firestore: Firestore
     private lateinit var adapter: ArticleAdapter
+    private var filterType: FilterType = FilterType.ALL
+
+    enum class FilterType {
+        ALL, SELLING, SOLD
+    }
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,14 +74,34 @@ class FragmentHome : Fragment(R.layout.fragment_home) {
 
         auth = FirebaseAuth.getInstance()
         adapter = ArticleAdapter()
-        val firestore = Firestore()
+        firestore = Firestore()
 
         fragmentHomeBinding.articleRecyclerView.layoutManager = LinearLayoutManager(context)
         fragmentHomeBinding.articleRecyclerView.adapter = adapter
 
-        firestore.getArticles { articles ->
-            // ArticleAdapter에 데이터 추가
-            adapter.setItems(articles)
+        // 필터 버튼 초기화
+        val filterButton = view.findViewById<Button>(R.id.filterButton)
+
+        filterArticles(filterType) //첫화면에서 전체 보이도록
+
+        // 필터 버튼 클릭 이벤트 처리
+        filterButton.setOnClickListener {
+            when (filterType) {
+                FilterType.ALL -> {
+                    filterType = FilterType.SELLING
+                    filterButton.text = "판매중"
+                }
+                FilterType.SELLING -> {
+                    filterType = FilterType.SOLD
+                    filterButton.text = "판매완료"
+                }
+                FilterType.SOLD -> {
+                    filterType = FilterType.ALL
+                    filterButton.text = "전체"
+                }
+            }
+            // 글 목록 필터링
+            filterArticles(filterType)
         }
 
         fragmentHomeBinding.addFloatingButton.setOnClickListener {
@@ -87,10 +113,7 @@ class FragmentHome : Fragment(R.layout.fragment_home) {
                     Snackbar.make(view, "로그인 후 사용하실 수 있습니다.", Snackbar.LENGTH_SHORT).show()
                 }
             }
-//            context?.let {
-//                val intent = Intent(it, AddArticleActivity::class.java)
-//                startActivity(intent)
-//            }
+
         }
 
         // RecyclerView의 아이템 클릭 리스너 설정
@@ -123,6 +146,19 @@ class FragmentHome : Fragment(R.layout.fragment_home) {
         })
     }
 
+    // 글 목록 필터링 함수
+    private fun filterArticles(filterType: FilterType) {
+        // Firestore에서 글 목록을 가져와서 필터링하여 표시
+        firestore.getArticles { articles ->
+            val filteredArticles = when (filterType) {
+                FilterType.ALL -> articles // 모든 글 표시
+                FilterType.SELLING -> articles.filter { !it.isSold } // 판매중인 글만 표시
+                FilterType.SOLD -> articles.filter { it.isSold } // 판매완료된 글만 표시
+            }
+            // ArticleAdapter에 데이터 추가
+            adapter.setItems(filteredArticles)
+        }
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onResume() {
@@ -132,5 +168,6 @@ class FragmentHome : Fragment(R.layout.fragment_home) {
 
     override fun onDestroy() {
         super.onDestroy()
+        binding = null
     }
 }

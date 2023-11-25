@@ -38,36 +38,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <Button
-        android:id="@+id/imageAddButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/violet"
-        android:text="@string/add_image"
-        app:layout_constraintEnd_toEndOf="@id/photoImageView"
-        app:layout_constraintStart_toStartOf="@id/photoImageView"
-        app:layout_constraintTop_toBottomOf="@id/photoImageView" />
-
-    <ImageView
-        android:id="@+id/photoImageView"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toTopOf="@id/imageAddButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbarUnderLineView" />
-
     <TextView
         android:id="@+id/titleTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="338dp"
         android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageAddButton" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarUnderLineView" />
 
     <EditText
         android:id="@+id/priceEditText"
@@ -108,30 +88,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
+    <RadioGroup
+        android:id="@+id/sellGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/submitButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toBottomOf="@+id/contentEditText">
 
-    <EditText
-        android:id="@+id/isSoldEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="@string/isSold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contentEditText" />
+
+        <RadioButton
+            android:id="@+id/sellButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="판매중"
+            tools:layout_editor_absoluteX="145dp"
+            tools:layout_editor_absoluteY="646dp" />
+
+        <RadioButton
+            android:id="@+id/soldButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="판매완료" />
+
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

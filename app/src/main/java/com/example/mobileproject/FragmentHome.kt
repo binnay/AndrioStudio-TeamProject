@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import androidx.recyclerview.widget.RecyclerView
 
 class Firestore {
 
@@ -28,25 +29,26 @@ class Firestore {
 //            }
         itemsCollection
             .get().addOnSuccessListener {
-            for(document in it){
-                document.reference.collection("Item List").get().addOnSuccessListener {
-                    for(itemDocument in it) {
+                for(document in it){
+                    document.reference.collection("Item List").get().addOnSuccessListener {
+                        for(itemDocument in it) {
 //                        System.out.println("checked "+itemDocument.get("title"))
-                        val article = ArticleModel(
-                            itemDocument.get("title").toString(),
-                            itemDocument.get("price").toString(),
-                            "",
-                            false
-                        )
-                        articleList.add(article)
-                        System.out.println("checked article title : "+article.title + ", price : "+article.price)
-                        System.out.println("checked size : "+articleList.size)
+                            val article = ArticleModel(
+                                document.get("email").toString(),
+                                itemDocument.get("title").toString(),
+                                itemDocument.get("price").toString().toInt(),
+                                "",
+                                itemDocument.get("sold").toString().toBoolean()
+                            )
+                            articleList.add(article)
+                            System.out.println("checked article title : "+article.title + ", price : "+article.price)
+                            System.out.println("checked size : "+articleList.size)
+                        }
+                        callback(articleList)
                     }
-                    callback(articleList)
                 }
-            }
 //                System.out.println("checked size : "+articleList.size)
-        }
+            }
     }
 }
 class FragmentHome : Fragment(R.layout.fragment_home) {
@@ -90,6 +92,35 @@ class FragmentHome : Fragment(R.layout.fragment_home) {
 //                startActivity(intent)
 //            }
         }
+
+        // RecyclerView의 아이템 클릭 리스너 설정
+        adapter.setOnItemClickListener(object : ArticleAdapter.OnItemClickListener {
+            override fun onItemClick(position: Int, item: ArticleModel) {
+                // 클릭한 아이템에서 필요한 정보 추출
+                val userId = item.userId
+                val title = item.title
+                val price = item.price
+                val content = item.content
+
+                if(auth.currentUser?.email==userId) {
+                    val intent = Intent(requireContext(), EditArticleActivity::class.java)
+                    intent.putExtra("title", title)
+
+                    // 수정하기 페이지로 이동
+                    startActivity(intent)
+                } else {
+                    val intent = Intent(requireContext(), DetailArticleActivity::class.java)
+                    intent.putExtra("seller", userId)
+                    intent.putExtra("title", title)
+                    intent.putExtra("price", price)
+                    intent.putExtra("content", content)
+
+                    // 상세 보기 페이지로 이동
+                    startActivity(intent)
+                }
+
+            }
+        })
     }
 
 

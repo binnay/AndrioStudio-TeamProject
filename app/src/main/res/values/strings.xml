@@ -9,4 +9,7 @@
     <string name="edit_item">판매글 수정</string>
     <string name="edit">수정</string>
     <string name="content">설명</string>
+    <string name="isSold">판매중 또는 판매완료</string>
+    <string name="detail">글 상세보기</string>
+    <string name="send_message">메시지 보내기</string>
 </resources>

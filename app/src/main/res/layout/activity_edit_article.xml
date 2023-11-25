@@ -88,18 +88,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/isSoldEditText"
-        android:layout_width="0dp"
+    <RadioGroup
+        android:id="@+id/sellGroup"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="@string/isSold"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/submitButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contentEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/contentEditText">
+
+
+        <RadioButton
+            android:id="@+id/sellButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="판매중"
+            tools:layout_editor_absoluteX="145dp"
+            tools:layout_editor_absoluteY="646dp" />
+
+        <RadioButton
+            android:id="@+id/soldButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="판매완료" />
+
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

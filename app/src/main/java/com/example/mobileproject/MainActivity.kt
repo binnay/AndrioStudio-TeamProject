@@ -33,6 +33,9 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
 
+        // 초기에 선택되어야 하는 아이템을 설정
+        bottomNavigationView.selectedItemId = R.id.mypageItem
+
         // setOnNavigationItemSelectedListener 대신 setOnItemSelectedListener 사용
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             val transaction: FragmentTransaction = fragmentManager.beginTransaction()

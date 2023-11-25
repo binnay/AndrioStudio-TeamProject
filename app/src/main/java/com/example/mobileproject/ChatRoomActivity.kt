@@ -99,6 +99,8 @@ class ChatRoomActivity : AppCompatActivity() {
         val chatsCollection = db.collection("chats")
         val buyerCollection = chatsCollection.document(sender).collection("buyer")
         val messagesCollection = buyerCollection.document(sellerEmail).collection("messages")
+        val sellerCollection = chatsCollection.document(sellerEmail).collection("buyer")
+        val messagesCollection2 = sellerCollection.document(sender).collection("messages")
 
         messagesCollection.add(chatMessage)
             .addOnSuccessListener {
@@ -107,7 +109,7 @@ class ChatRoomActivity : AppCompatActivity() {
                     val chatListCollection = db.collection("chats").document(sender).collection("buyer")
                     chatListCollection.add(chatListItem)
                 }
-
             }
+        messagesCollection2.add(chatMessage)
     }
 }

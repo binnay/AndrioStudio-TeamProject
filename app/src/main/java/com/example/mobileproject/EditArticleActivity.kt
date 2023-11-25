@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +29,34 @@ class EditArticleActivity : AppCompatActivity() {
         val titleTextView = findViewById<TextView>(R.id.titleTextView)
         titleTextView.text = title
 
+        val itemsCollection= db.collection("items")
+        val userDoc = itemsCollection.document(auth.currentUser?.email.toString())
+        val itemList = userDoc.collection("Item List").document(title.toString())
+        System.out.println("email"+auth.currentUser?.email)
+        itemList.get().addOnSuccessListener { documentSnapshot ->
+            if (documentSnapshot.exists()) {
+                val price = documentSnapshot.getLong("price").toString()
+                findViewById<EditText>(R.id.priceEditText).setText(price)
+                System.out.println("checked : price")
+                val content = documentSnapshot.getString("content") ?: "" // null 처리 추가
+                findViewById<EditText>(R.id.contentEditText).setText(content)
+                val isSold = documentSnapshot.getBoolean("sold")
+                if (isSold != null) {
+                    if (isSold) {
+                        findViewById<RadioButton>(R.id.soldButton).isChecked = true
+                    } else {
+                        findViewById<RadioButton>(R.id.sellButton).isChecked = true
+                    }
+                }
+            } else {
+                // 문서가 존재하지 않을 때의 처리 (옵션)
+                Toast.makeText(this, "내용을 불러오지 못했습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }.addOnFailureListener {
+            // 에러 처리 (옵션)
+            Toast.makeText(this, "오류가 발생했습니다: ${it.message}", Toast.LENGTH_SHORT).show()
+        }
+
         findViewById<Button>(R.id.submitButton).setOnClickListener {
             if (areAllFieldsFilled() && isValidIsSoldInput()) {
                 editArticleToFirestore()
@@ -42,16 +72,19 @@ class EditArticleActivity : AppCompatActivity() {
     }
 
     private fun isValidIsSoldInput(): Boolean {
-        val isSold = findViewById<EditText>(R.id.isSoldEditText).text.toString()
-        return isSold == "판매중" || isSold == "판매완료"
+        val radioGroup = findViewById<RadioGroup>(R.id.sellGroup)
+        val checkedRadioButtonId = radioGroup.checkedRadioButtonId
+        return checkedRadioButtonId!=-1
     }
 
     private fun areAllFieldsFilled(): Boolean {
         val price = findViewById<EditText>(R.id.priceEditText).text.toString()
         val content = findViewById<EditText>(R.id.contentEditText).text.toString()
-        val isSold = findViewById<EditText>(R.id.isSoldEditText).text.toString()
 
-        return price.isNotEmpty() && content.isNotEmpty() && isSold.isNotEmpty()
+        val radioGroup = findViewById<RadioGroup>(R.id.sellGroup)
+        val checkedRadioButtonId = radioGroup.checkedRadioButtonId
+
+        return price.isNotEmpty() && content.isNotEmpty() && checkedRadioButtonId!=-1
     }
     private fun editArticleToFirestore() {
         val userId = auth.currentUser?.email
@@ -61,8 +94,10 @@ class EditArticleActivity : AppCompatActivity() {
         val titleTextView = findViewById<TextView>(R.id.titleTextView)
         val priceEditText = findViewById<EditText>(R.id.priceEditText)
         val contentEditText = findViewById<EditText>(R.id.contentEditText)
-        val isSoldEditText = findViewById<EditText>(R.id.isSoldEditText)
-        val isSold = isSoldEditText.text.toString() != "판매중"
+
+        val radioGroup = findViewById<RadioGroup>(R.id.sellGroup)
+        val checkedRadioButtonId = radioGroup.checkedRadioButtonId
+        val isSold : Boolean = (checkedRadioButtonId==R.id.soldButton)
 
         val title = titleTextView.text.toString()
         val price = priceEditText.text.toString().toInt()

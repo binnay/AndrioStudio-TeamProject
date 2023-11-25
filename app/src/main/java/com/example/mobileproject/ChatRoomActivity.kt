@@ -97,19 +97,19 @@ class ChatRoomActivity : AppCompatActivity() {
         val chatMessage = ChatItem(sender, message, timestamp)
 
         val chatsCollection = db.collection("chats")
-        val buyerCollection = chatsCollection.document(sender).collection("buyer")
-        val messagesCollection = buyerCollection.document(sellerEmail).collection("messages")
-        val sellerCollection = chatsCollection.document(sellerEmail).collection("buyer")
-        val messagesCollection2 = sellerCollection.document(sender).collection("messages")
+        val senderCollection = chatsCollection.document(sender).collection("buyer")
+        val messagesCollection = senderCollection.document(sellerEmail).collection("messages")
+
+        val receiverCollection = chatsCollection.document(sellerEmail).collection("buyer")
+        val messagesCollection2 = receiverCollection.document(sender).collection("messages")
 
         messagesCollection.add(chatMessage)
-            .addOnSuccessListener {
-                if (sender == sellerEmail) {
-                    val chatListItem = ChatListItem(sellerEmail)
-                    val chatListCollection = db.collection("chats").document(sender).collection("buyer")
-                    chatListCollection.add(chatListItem)
-                }
-            }
         messagesCollection2.add(chatMessage)
+
+        val sellerCollection = db.collection("chats").document(sellerEmail).collection("buyer")
+        val chatData = hashMapOf(
+            "email" to sender
+        )
+        sellerCollection.document(sender).set(chatData)
     }
 }

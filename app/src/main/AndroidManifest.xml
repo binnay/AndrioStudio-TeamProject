@@ -36,6 +36,10 @@
         <activity
             android:name=".DetailArticleActivity">
         </activity>
+
+        <activity
+            android:name=".BeforeLoginActivity">
+        </activity>
     </application>
 
 </manifest>

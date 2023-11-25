@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
     private var isLoggedIn: Boolean = false
     val fragmentALogin: FragmentALogin = FragmentALogin()
     val fragmentHome: FragmentHome = FragmentHome()
+    val fragementChatList : FragmentChatList = FragmentChatList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity() {
                     if(isLoggedIn) {
                         // 대화하기 아이템 클릭 시 다른 Fragment로 교체하도록 처리
                         // transaction.replace(R.id.frameLayout, 다른 Fragment).commitAllowingStateLoss()
+                        transaction.replace(R.id.frameLayout, fragementChatList).commitAllowingStateLoss()
                     }
                 }
                 R.id.mypageItem -> {
